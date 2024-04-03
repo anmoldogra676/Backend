@@ -1,0 +1,77 @@
+Client and Server 
+create a server --> express
+API --> get, post, put
+endpoint --> app.get('') whatever defined under '' is called endpoint
+database ---> Mongodb ( no sql ) schema less there is no preferred schema (tables and all )
+
+Web Dev --> client + server + database 
+store info --> database
+
+mongodb --> collection documents fields
+SQL     --> table row columns
+
+Moongoose --> 
+translator between nodejs and mongodb ( so that we can communicate)
+we can define  how data should look
+
+DB.JS --> file where we conncet to a mongodb database , 
+we connect to a url and then export that object so that we can use it 
+
+Next thing is model ---> 
+Model blueprint of data , represents the collections of database
+
+
+body-parser -->It acts a middleware  client sends the request to server to get some data. inside the body , body parsers helps 
+to parse the incomming data (data format may be form, json and any other) and gives us back in req.body.
+app.use(middleware)
+
+
+Inside the mongodb --> we can save the data using documents name .save() 
+since we are connected to mongodb using db object 
+and have defined the model and schema of the collection using the name.model('name',schema name)
+
+
+/////// parameterized route 
+localhost:3000/person
+localhost:3000/person/chef
+localhost:3000/person/worker
+
+iske liye we can define the route app.get('/person/:whatever name you want to give ')
+
+
+// express Router --> 
+Restaurant --> menu, person , restaurants different endpoints 
+so to make structure look good and organize we can use router 
+express router helps to create a router for specific collections and in the main file we can call that router for specific endpoint
+there are many api for many endpoints . so in the single server file we have using 
+app.use('/endpoint',name of router)
+
+
+// update --> (which record to update, exactly what to update )
+put/patch  method 
+hr document k pass unique --> _id
+
+
+/// ---> dotenv module 
+to manage sensitive information npm i dotenv
+create a .env file -->
+Inside our server file --> require('dotenv).config()
+access --> process.env.PORT || 3000
+and same file i can add inside the .gitignore file
+
+
+/// authentication --> 
+middleware ---> series of function call that happens between req and response cycle 
+app.use(middleware name) ---> by this we have attached a middleware for every req that is coming to you 
+middleware accepts --> req, res, next
+
+
+//authentication ---> passport (3rd party middleware)
+passport --> check the user credentials 
+key concepts --> passport
+middlware --> req ko authenticate krega
+strategy:
+serialize and deserialize :
+
+passport --> install passport and strategy ( local , jwt ) 
+once we get the strategy
