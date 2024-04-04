@@ -75,3 +75,53 @@ serialize and deserialize :
 
 passport --> install passport and strategy ( local , jwt ) 
 once we get the strategy
+
+
+----> auth.js ( authentication related things )
+
+
+Session and tokens and cookies and browser Storage 
+like in the flipkart ---> hr page authenticated so ek baar hi login kro and can access any page no need to login again for different route 
+
+user auth --> page access krne k liye session and token needed 
+session and token --> manages user states 
+
+session --> user aaya sign in kiya then server authenticate and since it's the first time so server create a session object 
+and provides a unique id and store that  in our database and in response it send back the cookie which contains the seesion id 
+and if next time person want to check other page then it send the cookie and server checks the database if same session id 
+is present 
+
+cookie ----> used by website---> search, interaction stored in the cookie object   ( piece of data ). whenever you acceess a new webisye 
+website sends the cookie file to server and then website customize accoridng to the cookie.
+but next time if i open the same site then insdie the browser data is stored inside the cookie file and https requests k saath bhej deta
+
+Types of cookiess -->
+session cookies --> temporary ( browser ko bnd krte hain tb remove ho jaata hai )
+persistent cookies --> preferences and login password and all
+
+types of storage --> 
+local storage , indexedDB , cookies
+
+cookies storage ---> received from server when we lohgin and it can contains persistant cookie and session cookie as well
+local storage --> store data local on browser.not send to other http requests like cookies
+seesion storage --> temporary 
+
+
+
+Token --> login kiya then server sends back the token and now this token is not saved in database.
+now for every other request check ki token valid hai ki nhi and token is created using the secret key which is known ot 
+server only 
+jwt token --> token is stored in cookies
+session vs tokens::
+sessions --> stored in db and cookies jaati hai and again check db if same session id and  
+tokens -->
+
+
+JWT Tokens --> header(algo) , payload and signature 
+user sign in --->( username, pass) --> server (authenticate) --> gives the token ( payload + secret key )
+and next time we want to access protected route --> authorization header k andr token de denge --> then server 
+verify the token using secret key 
+
+
+
+jwt.sign() --> payload and secret key  and verify

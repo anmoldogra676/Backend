@@ -14,3 +14,6 @@ let menuSchema = new Schema({
 })
 let menu = mongoose.model('menu',menuSchema)
 module.exports = menu
+
+
+// ---> Moongoose helps us to create schema or collection and can tell how our data will look alike 

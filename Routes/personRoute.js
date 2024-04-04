@@ -2,22 +2,63 @@ const express = require('express')
 const mongoose = require('mongoose')
 const router = express.Router();
 const person = require('../Model/Person')
-const ObjectId = mongoose.Types.ObjectId;
+ const {generateToken,jwtmiddleware}= require('../jwt')
 
-router.post('/',async (req,res)=>{
+router.post('/signup',async (req,res)=>{
     const data = req.body;
 
     try{
-        console.log(data)
+        // console.log(data)
         const nperson = new person(data) // create a new person document
         const savedData =await nperson.save()
-        console.log(savedData)
-        res.status(200).json(savedData)
+        // generate a token
+        const payload ={
+            id:savedData.id,
+            username:savedData.username
+        }
+        const token = generateToken(payload)
+        res.status(200).json({
+            savedData: savedData,token:token})
     }catch(err){
         res.status(500).json(err)
     
     }
 })
+
+router.post('/signin',async(req, res)=>{
+    const {username,password} = req.body;
+    try {
+        const findUser = await person.findOne({username:username});
+        if(!findUser)res.send("invalid user please sign up ")
+        const passMatch = findUser.comparePassword(password)
+        if(!passMatch)res.send("invalid pass for signin")
+        const payload ={
+          id:findUser.id,
+          username:findUser.username  
+        }
+        const token = generateToken(payload)
+        res.status(200).send(token)
+
+    }catch(err){
+     res.status(404).send("error in the signin Route")
+    }
+
+})
+
+router.get('/profile',jwtmiddleware,async(req,res)=>{
+    try{
+        // console.log(req.id)
+        console.log(req.user)
+        let idd = req.user.id
+        let userId = await person.findById(idd)
+        // console.log(userId)
+
+        res.send(userId)
+    }catch(err){
+        res.send("error in profile route")
+    }
+})
+
 
 router.get('/',async(req,res)=>{
     try{

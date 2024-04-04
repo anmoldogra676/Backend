@@ -1,8 +1,10 @@
 // database connection --> moongoose 
+
 const mongoose = require('mongoose')
-const url= 'mongodb+srv://anmoldogra676:anmoldogra676@restaurant.cowypf0.mongodb.net/'
+require('dotenv').config() // configure the dotenv file 
+const url= process.env.mongoURL
 mongoose.connect(url)
-const db = mongoose.connection
+const db =  mongoose.connection
 db.on('connected',()=>{
     console.log('connected to database')
 })

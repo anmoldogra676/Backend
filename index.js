@@ -1,31 +1,13 @@
 const express = require('express')
 const db = require('./db')
+require('dotenv').config() // just to access the env variables
 const app = express()
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require('./auth')
 app.use(express.json()) // parses incomming request to js object
-const person = require('./Model/Person')
+
 const personRouter = require('./Routes/personRoute')
 const MenuRouter = require('./Routes/menuRoute')
-
-passport.use(new LocalStrategy(
-   async function(username, passwordd, done) {
-    console.log("user redirected to certain route having some params")
-   let pp = await person.findOne({ username: username })
-    
-    let isPassMatch = passwordd=== pp.password
-    console.log(passwordd)
-    console.log(pp.password)
-    console.log(isPassMatch)
-    if(isPassMatch){
-        return done(null ,pp)
-    }else{
-        return done(null, null, {"message":"wrong pass"})
-    }
-   }
-  ));
-
-app.use(passport.initialize());
+app.use(passport.initialize()); // this also we have to use for passport so we can use it inside the routes
 
 app.use('/person',personRouter)
 app.use('/menu',MenuRouter)
@@ -34,7 +16,9 @@ app.get('/',passport.authenticate('local',{session:false}) ,(req,res)=>{
         msg:"Welcome to home page"
     }) 
 })
-app.listen(3000)
+let port = process.env.PORT ||4000
+console.log(port)
+app.listen(port)
 
 
 
